@@ -95,6 +95,8 @@ def parse_args():
     parser.add_argument('--input_path', help='Path to dataset to embed', type=str, 
         default='/Users/klanna/UniParis/PoincareMSA/data/glob/Nfasta/')
 
+    parser.add_argument('--rfa_output_path', help='Path to save the RFA matrix', type=str)
+
     parser.add_argument('--output_path', help='Path to dataset to embed', type=str, 
         default='/Users/klanna/UniParis/results/glob/')
 
@@ -187,7 +189,7 @@ def poincare_map(opt):
     set_seed(opt.seed)
 #    torch.manual_seed(opt.seed)
 
-    features, labels = prepare_data(opt.input_path, withroot = opt.rotate) 
+    features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
     # if not (opt.tree is None):
     #     tree_levels, color_dict = get_tree_colors(
     #         opt, labels, 
@@ -213,7 +215,7 @@ def poincare_map(opt):
 
     # Save the numpy array as a DataFrame
     RFA_df = pd.DataFrame(RFA_np)
-    RFA_matrix_path = os.path.join(opt.output_path, 'RFA_matrix.csv')
+    RFA_matrix_path = os.path.join(opt.rfa_output_path, 'RFA_matrix.csv')
     RFA_df.to_csv(RFA_matrix_path, index=False)
     print(f"RFA matrix CSV file saved to {RFA_matrix_path}")
 
