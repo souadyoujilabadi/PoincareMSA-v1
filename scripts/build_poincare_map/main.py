@@ -213,7 +213,9 @@ def poincare_map(opt):
 
     # Save the numpy array as a DataFrame
     RFA_df = pd.DataFrame(RFA_np)
-    RFA_df.to_csv('RFA_matrix.csv', index=False)
+    RFA_matrix_path = os.path.join(opt.output_path, 'RFA_matrix.csv')
+    RFA_df.to_csv(RFA_matrix_path, index=False)
+    print(f"RFA matrix CSV file saved to {RFA_matrix_path}")
 
     # Continue using RFA as a tensor in the rest of the code
 
