@@ -207,6 +207,16 @@ def poincare_map(opt):
         sigma=opt.sigma
         )
     print(RFA)
+
+    # Convert the RFA tensor to a numpy array for saving
+    RFA_np = RFA.cpu().numpy() if RFA.is_cuda else RFA.numpy()
+
+    # Save the numpy array as a DataFrame
+    RFA_df = pd.DataFrame(RFA_np)
+    RFA_df.to_csv('RFA_matrix.csv', index=False)
+
+    # Continue using RFA as a tensor in the rest of the code
+
     if opt.batchsize < 0:
         opt.batchsize = min(512, int(len(RFA)/10))
         print('batchsize = ', opt.batchsize)
