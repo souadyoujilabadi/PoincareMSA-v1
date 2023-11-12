@@ -206,7 +206,7 @@ def poincare_map(opt):
         connected=opt.connected,
         sigma=opt.sigma
         )
-    #print(RFA)
+    print(RFA)
     if opt.batchsize < 0:
         opt.batchsize = min(512, int(len(RFA)/10))
         print('batchsize = ', opt.batchsize)
