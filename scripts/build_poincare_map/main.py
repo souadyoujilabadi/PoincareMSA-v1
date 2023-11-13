@@ -118,6 +118,7 @@ def parse_args():
     parser.add_argument('--labels', help='has labels', type=int, default=1)
     parser.add_argument('--mode',
         help='Mode: features or KNN', type=str, default='features')
+    parser.add_argument('--distance_matrix', help='Path to precomputed distance matrix', type=str)
 
     parser.add_argument('--normalize',
         help='Apply z-transform to the data', type=int, default=0)
@@ -192,19 +193,26 @@ def poincare_map(opt):
     features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
     # if not (opt.tree is None):
     #     tree_levels, color_dict = get_tree_colors(
-    #         opt, labels, 
+    #         opt, labels,
     #         f'{opt.input_path}/{opt.family}_tree_cluster_{opt.tree}')
     # else:
     #     color_dict = None
     #     tree_levels = None
 
     # compute matrix of RFA similarities
+    # Read the distance matrix if provided
+    distance_matrix = None
+    if opt.distance_matrix:
+        distance_matrix = pd.read_csv(opt.distance_matrix, header=None).to_numpy()
+        print(f"Distance matrix loaded from {opt.distance_matrix}")
+
     RFA = compute_rfa(
         features,
+        distance_matrix=distance_matrix,
         mode=opt.mode,
         k_neighbours=opt.knn,
         distfn=opt.distfn,
-        distlocal= opt.distlocal,
+        distlocal=opt.distlocal,
         connected=opt.connected,
         sigma=opt.sigma
         )
