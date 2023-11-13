@@ -6,6 +6,7 @@
 #
 
 from sklearn.neighbors import kneighbors_graph
+from sklearn.metrics import pairwise_distances
 from sklearn.decomposition import PCA
 from scipy.sparse import csgraph
 
@@ -140,7 +141,7 @@ def connect_knn(KNN, distances, n_components, labels):
     return KNN
 
 
-def compute_rfa(features, mode='features', k_neighbours=15, distfn='sym', 
+def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15, distfn='sym',
     connected=False, sigma=1.0, distlocal='minkowski'):
     """
     Computes the target RFA similarity matrix. The RFA matrix of
@@ -149,27 +150,35 @@ def compute_rfa(features, mode='features', k_neighbours=15, distfn='sym',
     neighbour graph of the data.
     """
     start = timeit.default_timer()
-    if mode == 'features':
-        KNN = kneighbors_graph(features,
+
+    # Compute the KNN matrix
+    # Using the features or a provided distance matrix
+    if mode == 'features' or distance_matrix is not None:
+        # Use distance_matrix if provided, otherwise use the features
+        data = distance_matrix if distance_matrix is not None else features
+        metric = 'precomputed' if distance_matrix is not None else distlocal
+        KNN = kneighbors_graph(data,
                                k_neighbours,
                                mode='distance',
-                               metric=distlocal,
+                               metric=metric,
                                include_self=False).toarray()
-
+        # Symmetrize the KNN matrix
         if 'sym' in distfn.lower():
             KNN = np.maximum(KNN, KNN.T)
         else:
-            KNN = np.minimum(KNN, KNN.T)    
-
+            KNN = np.minimum(KNN, KNN.T)
+        # Handle connected components
         n_components, labels = csgraph.connected_components(KNN)
-
         if connected and (n_components > 1):
-            from sklearn.metrics import pairwise_distances
-            distances = pairwise_distances(features, metric=distlocal)
+            # Use the features to calculate pairwise distances if needed
+            distances = pairwise_distances(features, metric=distlocal) if distance_matrix is None else distance_matrix
             KNN = connect_knn(KNN, distances, n_components, labels)
+    
+    # If mode is not 'features' and no distance_matrix is provided, assume KNN is already computed
     else:
-        KNN = features    
+        KNN = features
 
+    # Compute the similarity matrix S
     if distlocal == 'minkowski':
         # sigma = np.mean(features)
         S = np.exp(-KNN / (sigma*features.size(1)))
@@ -179,17 +188,17 @@ def compute_rfa(features, mode='features', k_neighbours=15, distfn='sym',
     else:
         S = np.exp(-KNN / sigma)
 
+    # Compute the Laplacian
     S[KNN == 0] = 0
     print("Computing laplacian...")    
     L = csgraph.laplacian(S, normed=False)
     print(f"Laplacian computed in {(timeit.default_timer() - start):.2f} sec")
 
+    # Compute the RFA matrix
     print("Computing RFA...")
     start = timeit.default_timer()
     RFA = np.linalg.inv(L + np.eye(L.shape[0]))
     RFA[RFA==np.nan] = 0.0
-    
     print(f"RFA computed in {(timeit.default_timer() - start):.2f} sec")
 
     return torch.Tensor(RFA)
-
