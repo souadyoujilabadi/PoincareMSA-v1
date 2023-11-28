@@ -151,17 +151,43 @@ def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15
     """
     start = timeit.default_timer()
 
+    # Verify that kneighbors_graph can also take a distance matrix as input
+    # and that both KNN matrices are equal:
+    if mode == 'features':
+        # Calculate a distance matrix with pairwise_distances
+        sklearn_distance_matrix = pairwise_distances(features, metric=distlocal)
+        # Compute the KNN matrices
+        KNN_distance_matrix = kneighbors_graph(sklearn_distance_matrix,
+                                               k_neighbours,
+                                               mode='distance',
+                                               metric='precomputed',
+                                               include_self=False).toarray()
+        KNN_features = kneighbors_graph(features,
+                                        k_neighbours,
+                                        mode='distance',
+                                        metric=distlocal,
+                                        include_self=False).toarray()
+        # Verify that both KNN matrices are equal
+        same_graph = np.array_equal(KNN_from_distances, KNN_direct)
+        print(f"KNN matrices are equal: {same_graph}")
+        KNN = KNN_distance_matrix if same_graph else KNN_features
+    # Indeed, kneighbors_graph can take a distance matrix as input if metric='precomputed'
+    # The valid distance metrics for kneighbors_graph and pairwise distances are:
+    # ['cityblock', 'cosine', 'euclidean', 'haversine', 'l1', 'l2', 'manhattan', 'nan_euclidean', 'precomputed']
+    # https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.distance_metrics.html#sklearn.metrics.pairwise.distance_metrics
+    # https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html
+
     # Compute the KNN matrix
     # Using the features or a provided distance matrix
-    if mode == 'features' or distance_matrix is not None:
-        # Use distance_matrix if provided, otherwise use the features
-        data = distance_matrix if distance_matrix is not None else features
-        metric = 'precomputed' if distance_matrix is not None else distlocal
-        KNN = kneighbors_graph(data,
-                               k_neighbours,
-                               mode='distance',
-                               metric=metric,
-                               include_self=False).toarray()
+    # if mode == 'features' or distance_matrix is not None:
+    #     # Use distance_matrix if provided, otherwise use the features
+    #     data = distance_matrix if distance_matrix is not None else features
+    #     metric = 'precomputed' if distance_matrix is not None else distlocal
+    #     KNN = kneighbors_graph(data,
+    #                            k_neighbours,
+    #                            mode='distance',
+    #                            metric=metric,
+    #                            include_self=False).toarray()
         # Symmetrize the KNN matrix
         if 'sym' in distfn.lower():
             KNN = np.maximum(KNN, KNN.T)
