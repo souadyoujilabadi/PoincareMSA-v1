@@ -15,7 +15,7 @@ from scipy.spatial.distance import pdist, squareform
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html#scipy.spatial.distance.pdist
 # scipy.spatial.distance.pdist(X, metric='euclidean', *, out=None, **kwargs)[source]
 # metric : str or function, optional
-# metric = [‘braycurtis’, ‘canberra’, ‘chebyshev’, ‘cityblock’, ‘correlation’, ‘cosine’, ‘dice’, ‘euclidean’, ‘hamming’, ‘jaccard’, ‘jensenshannon’, ‘kulczynski1’, ‘mahalanobis’, ‘matching’, ‘minkowski’, ‘rogerstanimoto’, ‘russellrao’, ‘seuclidean’, ‘sokalmichener’, ‘sokalsneath’, ‘sqeuclidean’, ‘yule’] and more.
+# metric = ['Bray-Curtis', 'Canberra', 'Chebyshev', 'City Block', 'Correlation', 'Cosine', 'Euclidean', 'Jensen-Shannon', 'Mahalanobis', 'Minkowski', 'Standardized Euclidean', 'Squared Euclidean']
 
 
 parser = argparse.ArgumentParser(description='Calculate a distance matrix from a CSV file containing the features.')
