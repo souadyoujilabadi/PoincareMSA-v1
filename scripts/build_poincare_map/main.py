@@ -221,10 +221,9 @@ def poincare_map(opt):
     # Convert the RFA tensor to a numpy array for saving
     RFA_np = RFA.cpu().numpy() if RFA.is_cuda else RFA.numpy()
 
-    # Save the numpy array as a DataFrame
-    RFA_df = pd.DataFrame(RFA_np)
+    # Save the numpy array as a CSV file
     RFA_matrix_path = os.path.join(opt.rfa_output_path, 'RFA_matrix.csv')
-    RFA_df.to_csv(RFA_matrix_path, index=False)
+    np.savetxt(RFA_matrix_path, RFA_np, delimiter=",")
     print(f"RFA matrix CSV file saved to {RFA_matrix_path}")
 
     # Continue using RFA as a tensor in the rest of the code
