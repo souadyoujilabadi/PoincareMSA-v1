@@ -214,7 +214,7 @@ def poincare_map(opt):
         distfn=opt.distfn,
         distlocal=opt.distlocal,
         connected=opt.connected,
-        sigma=opt.sigma
+        sigma=opt.sigma,
         KNN_matrix_path=opt.matrices_output_path
         )
     print(RFA)

@@ -199,7 +199,7 @@ def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15
             # Use the features to calculate pairwise distances if needed
             distances = pairwise_distances(features, metric=distlocal) if distance_matrix is None else distance_matrix
             KNN = connect_knn(KNN, distances, n_components, labels)
-        # Save the KNN matrix if a path is provided
+        # Save the KNN matrix
         if KNN_matrix_path is not None:
             KNN_matrix_path = os.path.join(KNN_matrix_path, 'KNN_matrix.csv')
             np.save(KNN_matrix_path, KNN, delimiter=',')
