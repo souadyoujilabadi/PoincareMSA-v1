@@ -168,7 +168,7 @@ def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15
                                         metric=distlocal,
                                         include_self=False).toarray()
         # Verify that both KNN matrices are equal
-        same_graph = np.array_equal(KNN_from_distances, KNN_direct)
+        same_graph = np.array_equal(KNN_distance_matrix, KNN_features)
         print(f"KNN matrices are equal: {same_graph}")
         KNN = KNN_distance_matrix if same_graph else KNN_features
     # Indeed, kneighbors_graph can take a distance matrix as input if metric='precomputed'
