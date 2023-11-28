@@ -95,7 +95,7 @@ def parse_args():
     parser.add_argument('--input_path', help='Path to dataset to embed', type=str, 
         default='/Users/klanna/UniParis/PoincareMSA/data/glob/Nfasta/')
 
-    parser.add_argument('--rfa_output_path', help='Path to save the RFA matrix', type=str)
+    parser.add_argument('--matrices_output_path', help='Path to save KNN and RFA matrices', type=str)
 
     parser.add_argument('--output_path', help='Path to dataset to embed', type=str, 
         default='/Users/klanna/UniParis/results/glob/')
@@ -215,6 +215,7 @@ def poincare_map(opt):
         distlocal=opt.distlocal,
         connected=opt.connected,
         sigma=opt.sigma
+        KNN_matrix_path=opt.matrices_output_path
         )
     print(RFA)
 
@@ -222,7 +223,7 @@ def poincare_map(opt):
     RFA_np = RFA.cpu().numpy() if RFA.is_cuda else RFA.numpy()
 
     # Save the numpy array as a CSV file
-    RFA_matrix_path = os.path.join(opt.rfa_output_path, 'RFA_matrix.csv')
+    RFA_matrix_path = os.path.join(opt.matrices_output_path, 'RFA_matrix.csv')
     np.savetxt(RFA_matrix_path, RFA_np, delimiter=",")
     print(f"RFA matrix CSV file saved to {RFA_matrix_path}")
 
