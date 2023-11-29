@@ -199,6 +199,9 @@ def poincare_map(opt):
         print('labels.shape = ', labels.shape)
     else:
         features = None
+        # Create directory to save matrices when a precomputed distance matrix is provided
+        if not os.path.exists(opt.output_path):
+            os.makedirs(opt.output_path)
 
     # Download features as CSV file, pandas DF
     # df = pd.DataFrame(features)
