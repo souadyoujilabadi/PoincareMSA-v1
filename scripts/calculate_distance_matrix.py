@@ -8,6 +8,7 @@
 import argparse
 import importlib
 import os
+import inspect
 import pandas as pd
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
@@ -22,7 +23,6 @@ parser = argparse.ArgumentParser(description='Calculate a distance matrix from a
 parser.add_argument('--features', type=str, required=True, help='Path to the CSV file containing the features.')
 parser.add_argument('--metric', type=str, default='cosine', help='The distance metric to use. See scipy.spatial.distance.pdist for valid metrics.')
 parser.add_argument('--metric_module', type=str, default=None, help='The module containing the personalized distance metric to use.')
-parser.add_argument('--metric_function', type=str, default=None, help='The personalized distance metric to use.')
 parser.add_argument('ouput_path', type=str, help='Path to save the distance matrix.')
 args = parser.parse_args()
 
@@ -41,11 +41,11 @@ def calculate_distance_matrix(features, metric='cosine', metric_module=None, met
     print('Features loaded')
 
     # If a personalized distance metric is provided, import the module and get the function
-    if args.metric_module is not None and args.metric_function is not None:
+    if args.metric_module is not None:
         # Import the module containing the personalized distance metric
-        metric_module = importlib.import_module(args.metric_module)
+        metric_module = importlib.import_module(args.metric_module.replace('.py', ''))
         # Get the personalized distance metric function
-        metric = getattr(metric_module, args.metric_function)
+        metric = inspect.getmembers(metric_module, inspect.isfunction)[0][1]
     # Otherwise, use the metric provided by the user
     else:
         metric = args.metric
