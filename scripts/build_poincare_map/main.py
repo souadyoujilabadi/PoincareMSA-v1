@@ -194,11 +194,11 @@ def poincare_map(opt):
     print('features.shape = ', features.shape)
     print('labels.shape = ', labels.shape)
 
-    # Download features as CSV file, pandas DF:
-    df = pd.DataFrame(features)
-    features_path = os.path.join(opt.matrices_output_path, 'features.csv')
-    df.to_csv(features_path)  # default = index=True, header=True
-    print(f"features CSV file saved to {features_path}")
+    # Download features as CSV file, pandas DF
+    # df = pd.DataFrame(features)
+    # features_path = os.path.join(opt.matrices_output_path, 'features.csv')
+    # df.to_csv(features_path)  # default = index=True, header=True
+    # print(f"features CSV file saved to {features_path}")
 
     # if not (opt.tree is None):
     #     tree_levels, color_dict = get_tree_colors(
@@ -228,22 +228,13 @@ def poincare_map(opt):
         )
     print(RFA)
 
-    # Download RFA matrix as CSV file, pandas DF:
+    # Download RFA matrix as CSV file, pandas DF
     df = pd.DataFrame(RFA)
     RFA_matrix_path = os.path.join(opt.matrices_output_path, 'RFA_matrix.csv')
     df.to_csv(RFA_matrix_path)  # default = index=True, header=True
     print(f"RFA matrix CSV file saved to {RFA_matrix_path}")
 
-    # Convert the RFA tensor to a numpy array for saving
-    # RFA_np = RFA.cpu().numpy() if RFA.is_cuda else RFA.numpy()
-
-    # Save the numpy array as a CSV file
-    # RFA_matrix_path = os.path.join(opt.matrices_output_path, 'RFA_matrix.csv')
-    # np.savetxt(RFA_matrix_path, RFA_np, delimiter=",")
-    # print(f"RFA matrix CSV file saved to {RFA_matrix_path}")
-
     # Continue using RFA as a tensor in the rest of the code
-
     if opt.batchsize < 0:
         opt.batchsize = min(512, int(len(RFA)/10))
         print('batchsize = ', opt.batchsize)

@@ -205,9 +205,6 @@ def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15
             KNN_matrix_path = os.path.join(KNN_matrix_path, 'KNN_matrix.csv')
             df.to_csv(KNN_matrix_path)
             print(f"KNN matrix CSV file saved to {KNN_matrix_path}")
-            # KNN_matrix_path = os.path.join(KNN_matrix_path, 'KNN_matrix.csv')
-            # np.savetxt(KNN_matrix_path, KNN, delimiter=',')
-            # print(f"KNN matrix CSV file saved to {KNN_matrix_path}")
 
     # If mode is not 'features' and no distance_matrix is provided, assume KNN is already computed
     else:
