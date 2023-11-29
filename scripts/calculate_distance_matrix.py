@@ -26,7 +26,7 @@ parser.add_argument('--ouput_path', type=str, help='Path to save the distance ma
 args = parser.parse_args()
 
 
-def calculate_distance_matrix(features, metric='cosine', metric_module=None):
+def calculate_distance_matrix(features, ouput_path, metric='cosine', metric_module=None):
     """
     Calculate a distance matrix for given features using a specified metric.
 
@@ -60,10 +60,10 @@ def calculate_distance_matrix(features, metric='cosine', metric_module=None):
 
     # Save the distance matrix as CSV file, pandas DF
     df = pd.DataFrame(distance_matrix)  # default = index=True, header=True
-    distance_matrix_path = os.path.join(args.ouput_path, 'distance_matrix.csv')
+    distance_matrix_path = os.path.join(ouput_path, 'distance_matrix.csv')
     df.to_csv(distance_matrix_path)
     print(f"Distance matrix CSV file saved to {distance_matrix_path}")
 
 
 if __name__ == '__main__':
-    calculate_distance_matrix(args.features, args.metric, args.metric_module)
+    calculate_distance_matrix(args.features, args.ouput_path, args.metric, args.metric_module)
