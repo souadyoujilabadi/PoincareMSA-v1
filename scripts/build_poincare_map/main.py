@@ -191,6 +191,17 @@ def poincare_map(opt):
 #    torch.manual_seed(opt.seed)
 
     features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
+    print('features.shape = ', features.shape)
+    print('labels:', labels)
+    print('features:', features)
+    # Download features as CSV file, pandas:
+    df = pd.DataFrame(features)
+    features1_path = os.path.join(opt.matrices_output_path, 'features1.csv')
+    features2_path = os.path.join(opt.matrices_output_path, 'features2.csv')
+    df.to_csv(features1_path)  # default = index=True, header=True
+    df.to_csv(features2_path, index=False, header=False)
+    print(f"features CSV file saved to {features1_path}")
+
     # if not (opt.tree is None):
     #     tree_levels, color_dict = get_tree_colors(
     #         opt, labels,
