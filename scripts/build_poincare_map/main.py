@@ -196,7 +196,7 @@ def poincare_map(opt):
 
     # Download features as CSV file, pandas DF:
     df = pd.DataFrame(features)
-    features_path = os.path.join(opt.output_path, 'features.csv')
+    features_path = os.path.join(opt.matrices_output_path, 'features.csv')
     df.to_csv(features_path)  # default = index=True, header=True
     print(f"features CSV file saved to {features_path}")
 
@@ -230,7 +230,7 @@ def poincare_map(opt):
 
     # Download RFA matrix as CSV file, pandas DF:
     df = pd.DataFrame(RFA)
-    RFA_matrix_path = os.path.join(opt.output_path, 'RFA_matrix.csv')
+    RFA_matrix_path = os.path.join(opt.matrices_output_path, 'RFA_matrix.csv')
     df.to_csv(RFA_matrix_path)  # default = index=True, header=True
     print(f"RFA matrix CSV file saved to {RFA_matrix_path}")
 
