@@ -119,7 +119,8 @@ def parse_args():
     parser.add_argument('--mode',
         help='Mode: features or KNN', type=str, default='features')
     parser.add_argument('--distance_matrix',
-        help='Path to the CSV file containing the precomputed distance matrix', type=str)
+        help='Path to the CSV file containing the precomputed distance matrix',
+        type=str, default=None)
 
     parser.add_argument('--normalize',
         help='Apply z-transform to the data', type=int, default=0)
@@ -191,9 +192,11 @@ def poincare_map(opt):
     set_seed(opt.seed)
 #    torch.manual_seed(opt.seed)
 
-    features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
-    print('features.shape = ', features.shape)
-    print('labels.shape = ', labels.shape)
+    # Execute only if a precomputed distance matrix is not provided
+    if opt.distance_matrix is None:
+        features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
+        print('features.shape = ', features.shape)
+        print('labels.shape = ', labels.shape)
 
     # Download features as CSV file, pandas DF
     # df = pd.DataFrame(features)
@@ -210,11 +213,6 @@ def poincare_map(opt):
     #     tree_levels = None
 
     # compute matrix of RFA similarities
-    # Read the distance matrix if provided
-    distance_matrix = None
-    if opt.distance_matrix:
-        distance_matrix = pd.read_csv(opt.distance_matrix, header=None).to_numpy()
-        print(f"Distance matrix loaded from {opt.distance_matrix}")
 
     RFA = compute_rfa(
         features,
