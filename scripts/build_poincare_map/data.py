@@ -198,6 +198,9 @@ def compute_rfa(features=None, distance_matrix=None, # mode='features',
         if connected and (n_components > 1):
             # Use the features to calculate pairwise distances if needed
             distances = pairwise_distances(features, metric=distlocal) if distance_matrix is None else data
+            print("distances calculated")
+            print(distances)
+            print(distances.shape)
             KNN = connect_knn(KNN, distances, n_components, labels)
         # Save the KNN matrix as CSV file, pandas DF
         if output_path is not None:
