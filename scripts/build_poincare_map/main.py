@@ -245,7 +245,7 @@ def poincare_map(opt):
     titlename, fout = create_output_name(opt)
 
     indices = torch.arange(len(RFA))
-    
+
     if opt.cuda:
         indices = indices.cuda()
         RFA = RFA.cuda()
