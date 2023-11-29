@@ -141,8 +141,8 @@ def connect_knn(KNN, distances, n_components, labels):
     return KNN
 
 
-def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15, distfn='sym',
-    connected=False, sigma=1.0, distlocal='minkowski', output_path=None):
+def compute_rfa(features=None, distance_matrix=None, # mode='features',
+    k_neighbours=15, distfn='sym', connected=False, sigma=1.0, distlocal='minkowski', output_path=None):
     """
     Computes the target RFA similarity matrix. The RFA matrix of
     similarities relates to the commute time between pairs of nodes, and it is
@@ -153,7 +153,7 @@ def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15
 
     # # Verify that kneighbors_graph can also take a distance matrix as input
     # # and that both KNN matrices are equal:
-    # if mode == 'features':
+    # if features is not None:
     #     # Calculate a distance matrix with pairwise_distances from sklearn
     #     sklearn_distance_matrix = pairwise_distances(features, metric=distlocal)
     #     # Compute the KNN matrices
@@ -179,7 +179,7 @@ def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15
 
     # Compute the KNN matrix
     # Using the features or a user provided distance matrix
-    if mode == 'features' or distance_matrix is not None:
+    if features is not None or distance_matrix is not None:
         # Use distance_matrix if provided, otherwise use the features
         data = pd.read_csv(distance_matrix).values if distance_matrix is not None else features
         metric = 'precomputed' if distance_matrix is not None else distlocal
@@ -206,9 +206,9 @@ def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15
             df.to_csv(KNN_output_path)
             print(f"KNN matrix CSV file saved to {KNN_output_path}")
 
-    # If mode is not 'features' and no distance_matrix is provided, assume KNN is already computed
-    else:
-        KNN = features
+    # # If mode is not 'features' and no distance_matrix is provided, assume KNN is already computed
+    # else:
+    #     KNN = features
 
     # Compute the similarity matrix S
     if distlocal == 'minkowski':
