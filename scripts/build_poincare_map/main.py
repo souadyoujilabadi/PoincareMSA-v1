@@ -118,7 +118,8 @@ def parse_args():
     parser.add_argument('--labels', help='has labels', type=int, default=1)
     parser.add_argument('--mode',
         help='Mode: features or KNN', type=str, default='features')
-    parser.add_argument('--distance_matrix', help='Path to precomputed distance matrix', type=str)
+    parser.add_argument('--distance_matrix',
+        help='Path to the CSV file containing the precomputed distance matrix', type=str)
 
     parser.add_argument('--normalize',
         help='Apply z-transform to the data', type=int, default=0)
@@ -217,14 +218,14 @@ def poincare_map(opt):
 
     RFA = compute_rfa(
         features,
-        distance_matrix=distance_matrix,
+        distance_matrix=opt.distance_matrix,
         mode=opt.mode,
         k_neighbours=opt.knn,
         distfn=opt.distfn,
         distlocal=opt.distlocal,
         connected=opt.connected,
         sigma=opt.sigma,
-        KNN_matrix_path=opt.matrices_output_path
+        output_path=opt.matrices_output_path
         )
     print(RFA)
 
