@@ -195,8 +195,6 @@ def poincare_map(opt):
     # Features assignment only if a precomputed distance matrix is not provided
     if opt.distance_matrix is None:
         features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
-        print('features.shape = ', features.shape)
-        print('labels.shape = ', labels.shape)
     else:
         features = None
         # Create directory to save matrices when a precomputed distance matrix is provided
@@ -287,7 +285,7 @@ def poincare_map(opt):
 
     if opt.rotate:
         idx_root = np.where(df_pm['proteins_id'] == str(opt.iroot))[0][0]
-        print("Recentering poincare disk at ", opt.iroot) 
+        print("Recentering poincare disk at ", opt.iroot)
 #        print("root index: ", idx_root)
         poincare_coord_rot = poincare_translation(
             -embeddings[idx_root, :], embeddings)
