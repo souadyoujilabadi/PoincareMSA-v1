@@ -1,8 +1,7 @@
 """
 # Script to calculate a distance matrix for given features using a specified metric.
-# Utilizes scipy.spatial.distance.pdist for distance calculations and
-# scipy.spatial.distance.squareform to convert to a square matrix format.
-# The resulting distance matrix is then used as input to sklearn.neighbors.kneighbors_graph
+# Utilizes scipy.spatial.distance.pdist for distance calculations.
+# The resulting distance matrix will be used as input to sklearn.neighbors.kneighbors_graph
 # to compute the k-nearest neighbors (KNN) matrix.
 """
 
@@ -12,7 +11,7 @@ import importlib
 import os
 import inspect
 import pandas as pd
-from scipy.spatial.distance import pdist, squareform
+from scipy.spatial.distance import pdist
 # https://docs.scipy.org/doc/scipy/reference/spatial.distance.html#module-scipy.spatial.distance
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html#scipy.spatial.distance.pdist
 # scipy.spatial.distance.pdist(X, metric='euclidean', *, out=None, **kwargs)
@@ -53,10 +52,7 @@ def calculate_distance_matrix(features, output_path, metric='cosine', metric_mod
 
     # Calculate the pairwise distances between the rows of a matrix (i.e. features)
     # Retuns a ndarray (condensed distance matrix)
-    distances = pdist(features, metric=metric)
-
-    # Convert the condensed distance matrix to a squareform distance matrix
-    distance_matrix = squareform(distances)
+    distance_matrix = pdist(features, metric=metric)
     print('Distance matrix calculated')
     print(distance_matrix)
 
