@@ -66,4 +66,4 @@ def calculate_distance_matrix(features, metric='cosine', metric_module=None, met
 
 
 if __name__ == '__main__':
-    calculate_distance_matrix(args.features, args.metric, args.metric_module, args.metric_function)
+    calculate_distance_matrix(args.features, args.metric, args.metric_module)
