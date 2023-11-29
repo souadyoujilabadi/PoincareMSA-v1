@@ -59,9 +59,9 @@ def calculate_distance_matrix(features, output_path, metric='cosine', metric_mod
     print(distance_matrix)
 
     # Save the distance matrix as CSV file, pandas DF
-    output_directory = os.path.dirname(output_path)
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
+    # output_directory = os.path.dirname(output_path)
+    # if not os.path.exists(output_directory):
+    #     os.makedirs(output_directory)
 
     df = pd.DataFrame(distance_matrix)  # default = index=True, header=True
     distance_matrix_path = os.path.join(output_path, 'distance_matrix.csv')
