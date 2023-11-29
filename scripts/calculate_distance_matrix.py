@@ -22,11 +22,11 @@ parser = argparse.ArgumentParser(description='Calculate a distance matrix from a
 parser.add_argument('--features', type=str, required=True, help='Path to the CSV file containing the features.')
 parser.add_argument('--metric', type=str, default='cosine', help='The distance metric to use. See scipy.spatial.distance.pdist for valid metrics.')
 parser.add_argument('--metric_module', type=str, default=None, help='The module containing the personalized distance metric to use.')
-parser.add_argument('--ouput_path', type=str, help='Path to save the distance matrix.')
+parser.add_argument('--output_path', type=str, help='Path to save the distance matrix.')
 args = parser.parse_args()
 
 
-def calculate_distance_matrix(features, ouput_path, metric='cosine', metric_module=None):
+def calculate_distance_matrix(features, output_path, metric='cosine', metric_module=None):
     """
     Calculate a distance matrix for given features using a specified metric.
 
@@ -59,15 +59,15 @@ def calculate_distance_matrix(features, ouput_path, metric='cosine', metric_modu
     print(distance_matrix)
 
     # Save the distance matrix as CSV file, pandas DF
-    output_directory = os.path.dirname(ouput_path)
+    output_directory = os.path.dirname(output_path)
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
     df = pd.DataFrame(distance_matrix)  # default = index=True, header=True
-    distance_matrix_path = os.path.join(ouput_path, 'distance_matrix.csv')
+    distance_matrix_path = os.path.join(output_path, 'distance_matrix.csv')
     df.to_csv(distance_matrix_path)
     print(f"Distance matrix CSV file saved to {distance_matrix_path}")
 
 
 if __name__ == '__main__':
-    calculate_distance_matrix(args.features, args.ouput_path, args.metric, args.metric_module)
+    calculate_distance_matrix(args.features, args.output_path, args.metric, args.metric_module)
