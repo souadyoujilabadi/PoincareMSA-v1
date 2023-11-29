@@ -192,11 +192,13 @@ def poincare_map(opt):
     set_seed(opt.seed)
 #    torch.manual_seed(opt.seed)
 
-    # Execute only if a precomputed distance matrix is not provided
+    # Features assignment only if a precomputed distance matrix is not provided
     if opt.distance_matrix is None:
         features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
         print('features.shape = ', features.shape)
         print('labels.shape = ', labels.shape)
+    else:
+        features = None
 
     # Download features as CSV file, pandas DF
     # df = pd.DataFrame(features)
