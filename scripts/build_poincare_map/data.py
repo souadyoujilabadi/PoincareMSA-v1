@@ -201,7 +201,7 @@ def compute_rfa(features, distance_matrix=None, mode='features', k_neighbours=15
             KNN = connect_knn(KNN, distances, n_components, labels)
         # Save the KNN matrix as CSV file, pandas DF
         if KNN_matrix_path is not None:
-            df = pd.DataFrame(KNN)
+            df = pd.DataFrame(KNN)   # default = index=True, header=True
             KNN_matrix_path = os.path.join(KNN_matrix_path, 'KNN_matrix.csv')
             df.to_csv(KNN_matrix_path)
             print(f"KNN matrix CSV file saved to {KNN_matrix_path}")

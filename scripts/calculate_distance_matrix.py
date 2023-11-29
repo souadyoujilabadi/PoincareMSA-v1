@@ -10,7 +10,6 @@ import importlib
 import os
 import inspect
 import pandas as pd
-import numpy as np
 from scipy.spatial.distance import pdist, squareform
 # https://docs.scipy.org/doc/scipy/reference/spatial.distance.html#module-scipy.spatial.distance
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html#scipy.spatial.distance.pdist
@@ -59,9 +58,10 @@ def calculate_distance_matrix(features, metric='cosine', metric_module=None):
     print('Distance matrix calculated')
     print(distance_matrix)
 
-    # Save the distance matrix
+    # Save the distance matrix as CSV file, pandas DF
+    df = pd.DataFrame(distance_matrix)  # default = index=True, header=True
     distance_matrix_path = os.path.join(args.ouput_path, 'distance_matrix.csv')
-    np.savetxt(distance_matrix_path, distance_matrix, delimiter=',')
+    df.to_csv(distance_matrix_path)
     print(f"Distance matrix CSV file saved to {distance_matrix_path}")
 
 
