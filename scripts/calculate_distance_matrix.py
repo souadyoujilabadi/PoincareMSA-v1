@@ -40,8 +40,6 @@ def calculate_distance_matrix(features, output_path, metric='cosine', metric_mod
     # Read the features file and convert to a NumPy array
     features = pd.read_csv(features).values
     print('Features loaded')
-    print(features)
-    print(f"Features shape: {features.shape}")
 
     # If a personalized distance metric is provided, import the module and get the function
     if args.metric_module is not None:
