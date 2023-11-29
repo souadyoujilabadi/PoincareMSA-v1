@@ -200,6 +200,10 @@ def poincare_map(opt):
         print(features)
         print(labels.shape)
         print(labels)
+        # Download features as CSV file, Numpy array
+        features_path = os.path.join(opt.matrices_output_path, 'features.csv')
+        np.savetxt(features_path, features, delimiter=",")
+
         # Download features as CSV file, pandas DF
         # df = pd.DataFrame(features)
         # features_path = os.path.join(opt.matrices_output_path, 'features.csv')
