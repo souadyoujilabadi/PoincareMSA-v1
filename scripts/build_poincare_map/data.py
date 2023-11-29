@@ -181,7 +181,7 @@ def compute_rfa(features=None, distance_matrix=None, # mode='features',
     # Using the features or a user provided distance matrix
     if features is not None or distance_matrix is not None:
         # Use distance_matrix if provided, otherwise use the features
-        data = pd.read_csv(distance_matrix) if distance_matrix is not None else features
+        data = pd.read_csv(distance_matrix).values if distance_matrix is not None else features
         metric = 'precomputed' if distance_matrix is not None else distlocal
         print(data.shape)
         print(data)
