@@ -1,8 +1,10 @@
+"""
 # Script to calculate a distance matrix for given features using a specified metric.
 # Utilizes scipy.spatial.distance.pdist for distance calculations and
 # scipy.spatial.distance.squareform to convert to a square matrix format.
 # The resulting distance matrix is then used as input to sklearn.neighbors.kneighbors_graph
 # to compute the k-nearest neighbors (KNN) matrix.
+"""
 
 
 import argparse
