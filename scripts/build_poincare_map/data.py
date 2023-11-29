@@ -183,6 +183,8 @@ def compute_rfa(features=None, distance_matrix=None, # mode='features',
         # Use distance_matrix if provided, otherwise use the features
         data = pd.read_csv(distance_matrix) if distance_matrix is not None else features
         metric = 'precomputed' if distance_matrix is not None else distlocal
+        print(data.shape)
+        print(data)
         KNN = kneighbors_graph(data,
                                k_neighbours,
                                mode='distance',
