@@ -27,7 +27,7 @@ parser.add_argument('ouput_path', type=str, help='Path to save the distance matr
 args = parser.parse_args()
 
 
-def calculate_distance_matrix(features, metric='cosine', metric_module=None, metric_function=None):
+def calculate_distance_matrix(features, metric='cosine', metric_module=None):
     """
     Calculate a distance matrix for given features using a specified metric.
 
