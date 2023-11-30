@@ -295,10 +295,11 @@ def poincare_map(opt):
     df_pm = pd.DataFrame(embeddings, columns=['pm1', 'pm2'])
     if opt.distance_matrix is None:
         df_pm['proteins_id'] = labels
+        # print(f'labels: {labels}')
     else:
         labels = np.loadtxt(opt.labels, delimiter=',', dtype=str)
         df_pm['proteins_id'] = labels
-        print(f'labels: {labels}')
+        # print(f'labels: {labels}')
 
     if opt.rotate:
         idx_root = np.where(df_pm['proteins_id'] == str(opt.iroot))[0][0]
