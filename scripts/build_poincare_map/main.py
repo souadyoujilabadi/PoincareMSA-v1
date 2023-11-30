@@ -199,6 +199,7 @@ def poincare_map(opt):
         print(features)
         features = np.around(features, decimals=7)
         print('Features rounded')
+        print(features)
         # Download features as CSV file, Numpy array
         features_path = os.path.join(opt.matrices_output_path, 'features.csv')
         np.savetxt(features_path, features, delimiter=",")
