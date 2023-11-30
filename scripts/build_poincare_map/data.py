@@ -183,6 +183,10 @@ def compute_rfa(features=None, distance_matrix=None, # mode='features',
         # Use distance_matrix if provided, otherwise use the features
         data = distance_matrix if distance_matrix is not None else features
         metric = 'precomputed' if distance_matrix is not None else distlocal
+        if np.any(distance_matrix < 0):
+            print("Il y a des valeurs négatives dans la matrice.")
+        else:
+            print("Toutes les valeurs dans la matrice sont positives ou zéro.")
         KNN = kneighbors_graph(data,
                                k_neighbours,
                                mode='distance',
