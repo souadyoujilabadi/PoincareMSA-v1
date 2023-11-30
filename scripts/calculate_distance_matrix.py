@@ -61,13 +61,13 @@ def calculate_distance_matrix(features, output_path, metric='cosine', metric_mod
     print('Distance matrix calculated')
     print(distance_matrix)
 
-    # Save the distance matrix as CSV file, pandas DF
+    # Create the output directory if it does not exist
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    df = pd.DataFrame(distance_matrix)  # default = index=True, header=True
+    # Save the distance matrix as CSV file, Numpy array
     distance_matrix_path = os.path.join(output_path, 'distance_matrix.csv')
-    df.to_csv(distance_matrix_path)
+    np.savetxt(distance_matrix_path, distance_matrix, delimiter=",")
     print(f"Distance matrix CSV file saved to {distance_matrix_path}")
 
 
