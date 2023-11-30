@@ -196,10 +196,10 @@ def poincare_map(opt):
     if opt.distance_matrix is None:
         features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
         print('Features loaded')
-        # Download features as CSV file, Numpy array
-        # features_path = os.path.join(opt.matrices_output_path, 'features.csv')
-        # np.savetxt(features_path, features, delimiter=",")
-        # print(f"features CSV file saved to {features_path}")
+        Download features as CSV file, Numpy array
+        features_path = os.path.join(opt.matrices_output_path, 'features.csv')
+        np.savetxt(features_path, features, delimiter=",")
+        print(f"features CSV file saved to {features_path}")
 
         # Download features as CSV file, pandas DF
         # df = pd.DataFrame(features)
@@ -208,6 +208,7 @@ def poincare_map(opt):
         # print(f"features CSV file saved to {features_path}")
     else:
         features = None
+        distance_matrix = pd.read_csv(opt.distance_matrix, header=0, index_col=0).values
         # Create directory to save matrices when a precomputed distance matrix is provided
         if not os.path.exists(opt.output_path):
             os.makedirs(opt.output_path)
@@ -226,7 +227,7 @@ def poincare_map(opt):
 
     RFA = compute_rfa(
         features,
-        distance_matrix=opt.distance_matrix,
+        distance_matrix,
         # mode=opt.mode,
         k_neighbours=opt.knn,
         distfn=opt.distfn,

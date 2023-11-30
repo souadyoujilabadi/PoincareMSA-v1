@@ -181,7 +181,7 @@ def compute_rfa(features=None, distance_matrix=None, # mode='features',
     # Using the features or a user provided distance matrix
     if features is not None or distance_matrix is not None:
         # Use distance_matrix if provided, otherwise use the features
-        data = pd.read_csv(distance_matrix, header=0, index_col=0).values if distance_matrix is not None else features
+        data = distance_matrix if distance_matrix is not None else features
         metric = 'precomputed' if distance_matrix is not None else distlocal
         KNN = kneighbors_graph(data,
                                k_neighbours,
@@ -199,8 +199,8 @@ def compute_rfa(features=None, distance_matrix=None, # mode='features',
             # Use the features to calculate pairwise distances if needed
             distances = pairwise_distances(features, metric=distlocal) if distance_matrix is None else data
             # Save distances as csv file Numpy array
-            distances_path = os.path.join(output_path, 'distance_matrix.csv')
-            np.savetxt(distances_path, distances, delimiter=",")
+            # distances_path = os.path.join(output_path, 'distance_matrix.csv')
+            # np.savetxt(distances_path, distances, delimiter=",")
             KNN = connect_knn(KNN, distances, n_components, labels)
         # Save the KNN matrix as CSV file, pandas DF
         if output_path is not None:
