@@ -12,6 +12,7 @@ import importlib
 import os
 import inspect
 import numpy as np
+import pandas as pd
 from scipy.spatial.distance import pdist, squareform
 # https://docs.scipy.org/doc/scipy/reference/spatial.distance.html#module-scipy.spatial.distance
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html#scipy.spatial.distance.pdist
@@ -37,7 +38,7 @@ def calculate_distance_matrix(features, output_path, metric='cosine', metric_mod
     :return: A squareform distance matrix.
     """
 
-    # Read the features file as a NumPy array
+    # Read the features CSV file as a NumPy array
     features = np.loadtxt(features, delimiter=',')
     print('Features loaded')
 
