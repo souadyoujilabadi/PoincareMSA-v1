@@ -195,7 +195,6 @@ def poincare_map(opt):
     # Features assignment only if a precomputed distance matrix is not provided
     if opt.distance_matrix is None:
         features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
-        print('labels:', labels)
         # Download features as CSV file, Numpy array
         features_path = os.path.join(opt.matrices_output_path, 'features.csv')
         np.savetxt(features_path, features, delimiter=",")
@@ -284,11 +283,11 @@ def poincare_map(opt):
         )
 
     df_pm = pd.DataFrame(embeddings, columns=['pm1', 'pm2'])
-    df_pm['proteins_id'] = labels
+    if opt.distance_matrix is None:
+        df_pm['proteins_id'] = labels
 
     if opt.rotate:
         idx_root = np.where(df_pm['proteins_id'] == str(opt.iroot))[0][0]
-        print("root index: ", idx_root)
         print("Recentering poincare disk at ", opt.iroot)
 #        print("root index: ", idx_root)
         poincare_coord_rot = poincare_translation(
