@@ -196,6 +196,9 @@ def poincare_map(opt):
     if opt.distance_matrix is None:
         features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
         print(f"labels: {labels}")
+        # Download labels as CSV file, Numpy array
+        labels_path = os.path.join(opt.matrices_output_path, 'labels.csv')
+        np.savetxt(labels_path, labels, delimiter=",")
         # Download features as CSV file, Numpy array
         features_path = os.path.join(opt.matrices_output_path, 'features.csv')
         np.savetxt(features_path, features, delimiter=",")
