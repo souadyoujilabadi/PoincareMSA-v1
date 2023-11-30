@@ -203,8 +203,8 @@ def poincare_map(opt):
         print(f'features CSV file saved to {features_path}')
 
         # Download labels as CSV file, Numpy array
-        labels_path = os.path.join(opt.matrices_output_path, 'labels.csv', fmt='%s')
-        np.savetxt(labels_path, labels, delimiter=',')
+        labels_path = os.path.join(opt.matrices_output_path, 'labels.csv')
+        np.savetxt(labels_path, labels, delimiter=',', fmt='%s')
         print(f'labels CSV file saved to {labels_path}')
 
         distance_matrix = None
