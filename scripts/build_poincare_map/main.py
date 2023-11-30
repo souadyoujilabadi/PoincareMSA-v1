@@ -195,20 +195,15 @@ def poincare_map(opt):
     # Features assignment only if a precomputed distance matrix is not provided
     if opt.distance_matrix is None:
         features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
-        # Download features as CSV file, Numpy array
-        features_path = os.path.join(opt.matrices_output_path, 'features.csv')
-        np.savetxt(features_path, features, delimiter=",")
-        print(f"features CSV file saved to {features_path}")
+        # # Download features as CSV file, Numpy array
+        # features_path = os.path.join(opt.matrices_output_path, 'features.csv')
+        # np.savetxt(features_path, features, delimiter=",")
+        # print(f"features CSV file saved to {features_path}")
         distance_matrix = None
 
-        # Download features as CSV file, pandas DF
-        # df = pd.DataFrame(features)
-        # features_path = os.path.join(opt.matrices_output_path, 'features.csv')
-        # df.to_csv(features_path)  # default = index=True, header=True
-        # print(f"features CSV file saved to {features_path}")
     else:
         features = None
-        distance_matrix = pd.read_csv(opt.distance_matrix, header=0, index_col=0).values
+        distance_matrix = np.loadtxt(opt.distance_matrix, delimiter=',')
         # Create directory to save matrices when a precomputed distance matrix is provided
         if not os.path.exists(opt.output_path):
             os.makedirs(opt.output_path)
