@@ -195,6 +195,7 @@ def poincare_map(opt):
     # Features assignment only if a precomputed distance matrix is not provided
     if opt.distance_matrix is None:
         features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
+        print(f"labels: {labels}")
         # Download features as CSV file, Numpy array
         features_path = os.path.join(opt.matrices_output_path, 'features.csv')
         np.savetxt(features_path, features, delimiter=",")
