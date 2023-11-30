@@ -115,7 +115,9 @@ def parse_args():
     parser.add_argument('--seed',
         help='Random seed', type=int, default=0)
 
-    parser.add_argument('--labels', help='has labels', type=int, default=1)
+    parser.add_argument('--labels', help='features labels, array containing the features labels in the same order as in the features dataset', 
+    type=str)
+    # parser.add_argument('--labels', help='has labels', type=int, default=1)
     # parser.add_argument('--mode',
     #     help='Mode: features or KNN', type=str, default='features')
     parser.add_argument('--distance_matrix',
@@ -292,6 +294,9 @@ def poincare_map(opt):
 
     df_pm = pd.DataFrame(embeddings, columns=['pm1', 'pm2'])
     if opt.distance_matrix is None:
+        df_pm['proteins_id'] = labels
+    else:
+        labels = np.loadtxt(opt.labels, delimiter=',', dtype=str)
         df_pm['proteins_id'] = labels
 
     if opt.rotate:
