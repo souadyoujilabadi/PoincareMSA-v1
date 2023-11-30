@@ -197,7 +197,7 @@ def poincare_map(opt):
         features, labels = prepare_data(opt.input_path, withroot=opt.rotate)
         print('Features loaded')
         print(features)
-        features = torch.around(features, decimals=7)
+        features = np.around(features, decimals=7)
         print('Features rounded')
         # Download features as CSV file, Numpy array
         features_path = os.path.join(opt.matrices_output_path, 'features.csv')
