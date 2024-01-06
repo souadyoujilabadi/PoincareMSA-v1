@@ -236,7 +236,7 @@ def poincare_map(opt):
         # mode=opt.mode,
         k_neighbours=opt.knn,
         distfn=opt.distfn,
-        distlocal="euclidean",  # opt.distlocal,
+        distlocal=opt.distlocal,
         connected=opt.connected,
         sigma=opt.sigma,
         output_path=opt.matrices_output_path
